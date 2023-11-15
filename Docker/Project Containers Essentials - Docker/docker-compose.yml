@@ -1,0 +1,59 @@
+version: "2"
+services:
+    my-database:    
+        build:        
+            context: .       
+            dockerfile: Dockerfile_mysql
+        container_name: my-database
+        image: mysql_image:v1
+        ports:          
+            - "3306:3306"
+        volumes:
+            - ./apps/mysql:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_DATABASE: my-db
+
+    php-apache1:    
+        build:        
+            context: .       
+            dockerfile: Dockerfile_php
+        container_name: php-apache1
+        image: php_image:v1
+        ports:          
+            - "8080:80"
+        volumes:
+            - ./apps/php1/src:/var/www/html
+        links:
+            - "my-database:db"
+
+    php-apache2:    
+        build:        
+            context: .       
+            dockerfile: Dockerfile_php
+        container_name: php-apache2
+        image: php_image:v1
+        ports:          
+            - "8081:80"
+        volumes:
+            - ./apps/php2/src:/var/www/html
+        links:
+            - "my-database:db"
+    
+    phpmyadmin:    
+        build:        
+            context: .       
+            dockerfile: Dockerfile_phpmyadmin
+        image: phpmyadmin_image:v1
+        container_name: phpmyadmin
+        restart: always
+        ports:          
+            - "8082:80"
+        environment:
+            PMA_HOST: mydb
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+        links:
+            - "my-database:db"

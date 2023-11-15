@@ -1,0 +1,14 @@
+{% extends "aplicatie\base.html" %}
+{% load static %}
+
+{% block continut %}
+    {% for articol in articole %}
+        <p> Titlu : {{ articol.titlu }} </p>
+        <p> Continut articol : {{ articol.continut_articol }} </p>
+        <p> Data adaugare: {{ articol.data_adaugarii }} </p>
+        <p> Autor: {{ articol.autor }} </p>
+        <img src = "{{ articol.imagine.url }}" >
+        <p></p>
+        <br>
+    {% endfor %}
+{% endblock continut %}
