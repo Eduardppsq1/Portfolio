@@ -5,4 +5,4 @@ This includes:
 - Other small Python scripts that I used for automation for personal need or for work.
 - A web Django project for a Python Advanced Course.
 - A Docker small project for Docker Fundamentals Course.
-(TBA) - An Ansible project for the Ansible Fundamentals Course.
+- (TBA) An Ansible project for the Ansible Fundamentals Course.
