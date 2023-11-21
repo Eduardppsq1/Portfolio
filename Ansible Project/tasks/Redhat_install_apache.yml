@@ -1,0 +1,5 @@
+---
+- name: Install Apache on RedHat
+  yum:
+    pkg: httpd
+    state: present

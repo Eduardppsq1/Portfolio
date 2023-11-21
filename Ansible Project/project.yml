@@ -1,0 +1,70 @@
+---
+- name: Install Java on machines
+  hosts: all
+  gather_facts: true
+  become: yes
+  vars_files:
+    - "vars/{{ ansible_os_family }}.yml"
+  vars_prompt:
+    - name: "user_name"
+      prompt: "Please introduce user name"
+      private: no
+    - name: "user_pass"
+      prompt: "Please introduce user password"
+      private: yes
+  roles:
+    - role: install_java
+    - role: geerlingguy.jenkins
+    - role: bertvv.tomcat
+  tasks:
+    - name: Create Linux group
+      group:
+        name: Test_Users
+        state: present
+    - name: Create Linux user
+      user:
+        name: "{{ user_name }}"
+        comment: User which will appear in Apache webpage
+        group: Test_Users
+        password: "{{ user_pass | password_hash('md5') }}"
+    - name: Create file that contains the username
+      shell: echo "{{ user_name }} is the test user for Apache" > test.txt
+    - name: Install Apache2
+      include_tasks: "tasks/{{ansible_os_family}}_install_apache.yml"
+    - name: Copy file to Apache index page location
+      copy:
+        src: test.txt
+        dest: /var/www/html/test.txt
+    - name: Restart the services
+      service:
+        name: "{{ item }}"
+        state: restarted
+      loop: [ jenkins, "{{ apache }}", tomcat9]
+    - name: Check Apache webpage
+      shell: "curl http://{{ ansible_hostname }}"
+      register: apache_content
+    - name: Check Jenkins webpage
+      shell: "curl http://{{ ansible_hostname }}:8080"
+      register: jenkins_content
+    - name: Check Tomcat webpage
+      shell: "curl http://{{ ansible_hostname }}:8089"
+      register: tomcat_content
+    - name: Print webpage contents
+      debug:
+        var: "{{ item }}.stdout"
+      with_items: [apache_content, jenkins_content, tomcat_content]
+    - name: Install python3-pip module
+      apt:
+        name: python3-pip
+        state: present
+    - name: Install python3-jenkins library
+      pip:
+        name: python-jenkins
+        executable: pip3
+    - name: Create a Jenkins job using basic authentication
+      community.general.jenkins_job:
+        name: Welcome_to_DevOps_world!
+        config: "{{ lookup('file', 'templates/welcome.xml') }}"
+        user: admin
+        password: admin
+        url: "http://{{ ansible_hostname }}:8080"

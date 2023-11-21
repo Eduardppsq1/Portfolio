@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+      <project>
+        <description>Welcome to the DevOps world!</description>
+        <builders>
+          <hudson.tasks.Shell>
+            <command>echo "Welcome to the DevOps world!"</command>
+          </hudson.tasks.Shell>
+        </builders>
+      </project>

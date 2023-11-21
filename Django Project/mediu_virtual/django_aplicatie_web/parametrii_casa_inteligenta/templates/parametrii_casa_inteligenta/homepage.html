@@ -1,0 +1,63 @@
+{% extends "parametrii_casa_inteligenta\base.html" %}
+{% load static %}
+
+{% block continut %}
+html, body {
+  height: 100%;
+}
+
+img.default {
+  height: auto;
+  width: auto;
+}
+
+img.one {
+  height: 30%;
+  width: 10%;
+}
+
+img.two {
+  height: 20%;
+  width: 10%;
+}
+{% endblock continut %}
+
+{% block continut2 %}
+    <h2>{{ bec }} Lux</h2>
+
+    <h2>{{ led }} cm</h2>
+
+    {% if ventilator_temperatura < 22 %}
+        <h2>{{ ventilator_temperatura }} °C {{ ventilator_umiditate }} % umiditate (Ventilatorul se invarte la 0% din turatia maxima) </h2>
+    {% elif ventilator_temperatura > 30 %}
+        <h2>{{ ventilator_temperatura }} °C {{ ventilator_umiditate }} % umiditate (Ventilatorul se invarte la 100% din turatia maxima) </h2>
+    {% else %}
+        <h2>{{ ventilator_temperatura }} °C {{ ventilator_umiditate }} % umiditate (Ventilatorul se invarte la 50% din turatia maxima) </h2>
+    {% endif %}
+
+    <h2>{{ foc }} (0 - Prezenta Flacara, 1 - Absenta Flacara)</h2>
+
+    {% if bec < 1 %}
+        <img class = "one" src = "{% static "parametrii_casa_inteligenta/bec_aprins.png" %}">
+    {% else %}
+        <img class = "one" src = "{% static "parametrii_casa_inteligenta/bec_stins.png" %}" >
+    {% endif %}
+
+    {% if led < 30 %}
+        <img class = "two" src = "{% static "parametrii_casa_inteligenta/led_rosu.png" %}">
+    {% elif led > 50 %}
+        <img class = "two" src = "{% static "parametrii_casa_inteligenta/led_verde.png" %}">
+    {% else %}
+        <img class = "two" src = "{% static "parametrii_casa_inteligenta/led_portocaliu.png" %}">
+    {% endif %}
+
+        <img class = "one" src = "{% static "parametrii_casa_inteligenta/ventilator.png" %}">
+
+    {% if foc == 0 %}
+        <img class = "one" src = "{% static "parametrii_casa_inteligenta/foc_aprins.png" %}"
+    {% else %}
+        <img class = "one" src = "{% static "parametrii_casa_inteligenta/foc_stins.png" %}"
+    {% endif %}
+{% endblock continut2 %}
+
+
