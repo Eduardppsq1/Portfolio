@@ -1,0 +1,29 @@
+[routers-sandbox]
+sandbox-iosxe-latest-1.cisco.com
+
+[routers-local]
+192.168.0.47
+
+[routers:children]
+routers-local
+routers-sandbox
+
+[routers-sandbox:vars]
+
+#ansible_user=developer
+#ansible_password=lastorangerestoreball8876
+ansible_user=admin
+ansible_password=C1sco12345
+ansible_connection=network_cli
+ansible_network_os=ios
+ansible_port=22
+ansible_become = no
+ansible_become_password = password
+ansible_become_method = enable
+
+[routers-local:vars]
+ansible_user=student
+ansible_password=cisco
+ansible_connection=network_cli
+ansible_network_os=ios
+

@@ -1,0 +1,29 @@
+---
+
+- name: General Config
+  hosts: routers-local
+  gather_facts: true
+
+  tasks:
+  - name: Add Banner
+    ios_banner:
+      banner: login
+      text: |
+        Nicolas Cage is the
+        Tiger King
+      state: present
+  - name: Add loopback
+    ios_interface:
+      name: Loopback21
+      state: present
+
+  - name: Gather facts again to check the presence of Loopback21
+    ios_facts:
+           
+  - name: Add ip on loopback interface and description
+    ios_config:
+      lines:
+        - description test CCNADevnet
+        - ip address 172.31.0.1 255.255.255.0
+      parents: interface Loopback21
+    when: "'Loopback21' in ansible_net_interfaces and ansible_net_interfaces['Loopback21'].operstatus == 'up'"

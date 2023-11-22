@@ -1,0 +1,22 @@
+---
+
+- name: Issue show commands
+  hosts: routers
+  connection: local
+
+  tasks:
+   - name: Show ip int brief
+     ios_command:
+       commands:
+        - show ip int brief
+     register: if_data_raw
+
+
+   - name: Extract interface data
+     set_fact:
+       if_data: "{{ if_data_raw.stdout_lines }}"
+
+
+   - name: Interfaces output
+     debug:
+       var: if_data[0]
