@@ -12,6 +12,6 @@ This includes:
 	* Creates a VPC, Subnets, Internet Gateway, Routing Tables and associates them
 	* Creates a Security Group based on IP ranges from a data source
 	* Creates private and public SSH key for authentication purposes
-	* Creates an EC2 VM which is included in previous VPC and SG
+	* Creates an EC2 VM instance which is part of previously created VPC and SG
 	* Creates an EBS volume for the VM and attaches it
 	* Does initial configuration of the VM using 2 scripts, one for installing packages and the other for creating a logical volume and mounting it
