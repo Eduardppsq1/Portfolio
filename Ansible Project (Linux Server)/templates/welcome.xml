@@ -3,7 +3,7 @@
         <description>Welcome to the DevOps world!</description>
         <builders>
           <hudson.tasks.Shell>
-            <command>echo "Welcome to the DevOps world!"</command>
+            <command>echo "Welcome to the DevOps World!"</command>
           </hudson.tasks.Shell>
         </builders>
       </project>
