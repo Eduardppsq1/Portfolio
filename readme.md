@@ -1,4 +1,4 @@
-Please find below a portfolio with some of my projects/scripts.
+ Please find below a portfolio with some of my projects/scripts.
 This includes:
 - Ansible Project (Linux Server): project with the scope of installing multiple roles, creating Linux group/users based on user input, modifying Apache homepage and activating ProxyPass towards Tomcat. Finally, all the services are checked and a Jenkins job is created via Ansible, along with installing the required dependencies. Made to work dynamically depending on Distro family (Redhat or Debian).
 - Ansible Project (Router Cisco): project for getting familiarized with regular Cisco Router actions such as: configuration, facts gathering, backups, show commands. This was done in a hybrid environment which includes local physical routers and virtual routers in EVE-NG.
