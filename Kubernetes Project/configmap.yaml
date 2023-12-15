@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-info
+  namespace: project
+data:
+  db_host: 'mysql-clusterip' 
+  db: test-db
+  password: root

@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: py-webapp-deploy
+  namespace: project
+  labels:
+    app: webapp
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webapp
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: webapp
+        tier: frontend
+    spec:
+      containers:
+      - name: python-pod
+        image: gxg513/telacad-python-k8s:v1
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-info
+              key: db_host
+        - name: DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: db-info
+              key: db
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: db-info
+              key: password
